@@ -22,19 +22,42 @@ struct Session{D<:Object}
     id::String
     attrs::D
     function Session(wd::RemoteWebDriver)
-        @unpack addr = wd
-        response = HTTP.post(
-            "$(wd.addr)/session",
-            [("Content-Type" => "application/json; charset=utf-8")],
-            JSON3.write(Dict("desiredCapabilities" => wd.capabilities, wd.kw...)),
+        addr = wd.addr
+        url = "http://localhost:4444/session"
+        headers = Dict(
+            "Accept" => "application/json",
+            "Content-Type" => "application/json;charset=UTF-8",
+            # "User-Agent" => "selenium/4.22.0.dev202405160507 (python mac)",
+            "Connection" => "keep-alive",
         )
+        _body = Dict(
+          "capabilities" => Dict(
+            "firstMatch" => [Dict()],
+            "alwaysMatch" => Dict(
+              "browserName" => "chrome",
+              "pageLoadStrategy" => "normal",
+              "goog:chromeOptions" => Dict(
+                "extensions" => [],
+                "args" => []
+              )
+            )
+          )
+        )
+        response = HTTP.post(
+                url,
+                headers,
+                body=JSON3.write(_body)
+        )
+
+        @info  response.status
         @assert response.status == 200
-        json = JSON3.read(response.body)
-        new{typeof(json.value)}(addr, json.sessionId, json.value)
+        data = JSON3.read(response.body)
+        new{typeof(data.value)}(addr, data.value.sessionId, data.value)
     end
 end
+
 broadcastable(obj::Session) = Ref(obj)
-summary(io::IO, obj::Session) = println(io, "Session")
-function show(io::IO, obj::Session)
+Base.summary(io::IO, obj::Session) = println(io, "Session")
+function Base.show(io::IO, obj::Session)
     print(io, summary(obj))
 end
