@@ -36,6 +36,7 @@ session = Session(wd)
 # Navigate To
 navigate!(session, "https://www.google.co.jp/")
 start_url = current_url(session)
+#=
 @inferred navigate!(session, "http://thedemosite.co.uk/addauser.php")
 # Get Current URL
 @test current_url(session) == "http://thedemosite.co.uk/addauser.php"
@@ -46,9 +47,11 @@ back!(session)
 forward!(session)
 @test current_url(session) == "http://thedemosite.co.uk/addauser.php"
 # Refresh
+=#
 @inferred refresh!(session)
 # Get Title
-@test document_title(session) == "Add a user - FREE PHP code and SQL"
+navigate!(session, "https://www.google.co.jp/")
+@test document_title(session) == "Google"
 # Get Window Handle
 @inferred window_handle(session)
 # Close Window

@@ -11,13 +11,13 @@ This typically hides the window in the system tray.
 """
 function minimize!(
     session::Session;
-    window::AbstractString = "current",
 )::NamedTuple{(:width, :height, :x, :y),NTuple{4,Int64}}
     window = "current"
     @unpack addr, id = session
     response = HTTP.post(
-        "$addr/session/$id/window/$window/minimize",
+        "$addr/session/$id/window/minimize",
         [("Content-Type" => "application/json; charset=utf-8")],
+        JSON3.write(Dict()),
     )
     @assert response.status == 200
     output = JSON3.read(response.body).value

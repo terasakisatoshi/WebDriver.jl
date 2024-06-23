@@ -9,11 +9,12 @@ This typically increases the window to the maximum available size without going 
 
     This command is implemented using the JSON Wire Protocol.
 """
-function maximize!(session::Session; window::AbstractString = "current")
+function maximize!(session::Session)
     @unpack addr, id = session
     response = HTTP.post(
-        "$addr/session/$id/window/$window/maximize",
+        "$addr/session/$id/window/maximize",
         [("Content-Type" => "application/json; charset=utf-8")],
+        JSON3.write(Dict()),
     )
     @assert response.status == 200
     output = JSON3.read(response.body).value

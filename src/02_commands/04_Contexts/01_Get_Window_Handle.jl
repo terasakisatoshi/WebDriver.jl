@@ -7,7 +7,7 @@ The window handle associated with the current top-level browsing context.
 function window_handle(session::Session)::String
     @unpack addr, id = session
     response = HTTP.get(
-        "$addr/session/$id/window_handle",
+        "$addr/session/$id/window",
         [("Content-Type" => "application/json; charset=utf-8")],
     )
     @assert response.status == 200

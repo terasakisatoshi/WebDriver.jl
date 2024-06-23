@@ -4,7 +4,7 @@
 
 If cookie = "", delete all cookies. Otherwise, delete cookie matching the "cookie" name.
 """
-function delete!(session::Session, cookie::AbstractString)::Nothing
+function Base.delete!(session::Session, cookie::AbstractString)::Nothing
     @unpack addr, id = session
     if isempty(cookie)
         response = HTTP.delete(

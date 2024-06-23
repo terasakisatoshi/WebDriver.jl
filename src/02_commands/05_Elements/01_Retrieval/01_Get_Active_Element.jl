@@ -6,7 +6,7 @@ Get Active Element
 """
 function active_element(session::Session)::Element
     @unpack addr, id = session
-    response = HTTP.post(
+    response = HTTP.get(
         "$addr/session/$id/element/active",
         [("Content-Type" => "application/json; charset=utf-8")],
     )

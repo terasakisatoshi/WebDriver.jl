@@ -8,7 +8,7 @@ In a tabbed browser, this will typically make the tab containing the browsing co
 function window_handles(session::Session)::Vector{String}
     @unpack addr, id = session
     response = HTTP.get(
-        "$addr/session/$id/window_handles",
+        "$addr/session/$id/window/handles",
         [("Content-Type" => "application/json; charset=utf-8")],
     )
     @assert response.status == 200

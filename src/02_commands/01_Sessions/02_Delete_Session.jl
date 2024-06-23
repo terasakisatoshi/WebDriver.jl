@@ -3,7 +3,7 @@
 	delete!(session::Session)
 Deletes the session from the Remote Driver.
 """
-function delete!(session::Session)
+function Base.delete!(session::Session)
     try
         @unpack addr, id = session
         response =
