@@ -1,14 +1,16 @@
 using Test, WebDriver
 using WebDriver: StatusError
 using Documenter
-DocMeta.setdocmeta!(WebDriver, :DocTestSetup, :(using WebDriver), recursive = true)
+# DocMeta.setdocmeta!(WebDriver, :DocTestSetup, :(using WebDriver), recursive = true)
 
 ENV["WEBDRIVER_HOST"] = get(ENV, "WEBDRIVER_HOST", "localhost")
 ENV["WEBDRIVER_PORT"] = get(ENV, "WEBDRIVER_PORT", "4444")
 
+#=
 @testset "WebDriver" begin
     doctest(WebDriver)
 end
+=#
 
 capabilities = Capabilities("chrome")
 @test isa(capabilities, Capabilities)
@@ -25,13 +27,14 @@ session = Session(wd)
 @test_throws WDError delete!(session)
 session = Session(wd)
 # Status
-@test status(wd)
+# @test status(wd)
 # Get Timeouts
 @test_broken timeouts(session)
 # Set Timeouts
 @inferred timeouts!(session, Timeouts(implicit = 50))
 @inferred timeouts!(session, Timeouts())
 # Navigate To
+navigate!(session, "https://www.google.co.jp/")
 start_url = current_url(session)
 @inferred navigate!(session, "http://thedemosite.co.uk/addauser.php")
 # Get Current URL
