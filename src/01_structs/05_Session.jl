@@ -23,7 +23,7 @@ struct Session{D<:Object}
     attrs::D
     function Session(wd::RemoteWebDriver)
         addr = wd.addr
-        url = "http://localhost:4444/session"
+        url = "$(addr)/session"
         headers = Dict(
             "Accept" => "application/json",
             "Content-Type" => "application/json;charset=UTF-8",

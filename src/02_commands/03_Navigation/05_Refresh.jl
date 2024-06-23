@@ -6,8 +6,11 @@ This command causes the browser to reload the page in the current top-level brow
 """
 function refresh!(session::Session)
     @unpack addr, id = session
-    response =
-        HTTP.post("$addr/session/$id/timeouts", [("Content-Type" => "application/json; charset=utf-8")])
+    response = HTTP.post(
+        "$addr/session/$id/timeouts",
+        [("Content-Type" => "application/json; charset=utf-8")],
+        JSON3.write(Dict()),
+    )
     @assert response.status == 200
     nothing
 end

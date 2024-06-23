@@ -7,7 +7,15 @@ This is equivalent to pressing the back button in the browser chrome or invoking
 """
 function back!(session::Session)
     @unpack addr, id = session
-    response = HTTP.post("$addr/session/$id/back", [("Content-Type" => "application/json; charset=utf-8")])
+    response = HTTP.post(
+        "$(addr)/session/$(id)/back",
+        Dict(
+            "Accept" => "application/json",
+            "Content-Type" => "application/json; charset=utf-8",
+            "Connection" => "keep-alive",
+            ),
+        JSON3.write(Dict()),
+    )
     @assert response.status == 200
     nothing
 end
