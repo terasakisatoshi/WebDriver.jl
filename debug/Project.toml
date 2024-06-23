@@ -1,0 +1,8 @@
+[deps]
+CondaPkg = "992eb4ea-22a4-4c89-a5bb-47a3300528ab"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
+WebDriver = "05625dda-b54a-434a-8c43-5c7937dfa4f0"

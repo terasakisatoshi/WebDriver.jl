@@ -24,6 +24,10 @@ wd = RemoteWebDriver(
 session = Session(wd)
 @test isa(session, Session)
 
+# Navigate
+navigate!(session, "https://www.google.co.jp/")
+@test current_url(session) == "https://www.google.co.jp/"
+
 # Delete Session
 @test delete!(session) == session.id
 @test_throws WDError delete!(session)
