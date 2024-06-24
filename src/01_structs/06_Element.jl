@@ -42,7 +42,6 @@ struct Element
         if location_strategy == "class name"
             value = ".$(value)"
         end
-        @show value
         # location_strategy = "xpath"
         # value = "//select[@id='selecttype']"
         response = HTTP.post(

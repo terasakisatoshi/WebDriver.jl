@@ -565,7 +565,9 @@ version = "1.0.0"
 
 [[deps.WebDriver]]
 deps = ["Base64", "CondaPkg", "Dates", "Documenter", "HTTP", "JSON3", "Parameters"]
-path = ".."
+git-tree-sha1 = "9b17498c3c5d7757490939610bab33ed101a490f"
+repo-rev = "terasaki/debug"
+repo-url = "https://github.com/terasakisatoshi/WebDriver.jl"
 uuid = "05625dda-b54a-434a-8c43-5c7937dfa4f0"
 version = "0.1.2"
 

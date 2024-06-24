@@ -2,4 +2,4 @@
 python = ">=3.5,<3.12"
 
 [pip.deps]
-selenium = ""
+selenium = "==4.21.0"
