@@ -69,7 +69,7 @@ element_keys!(password, ENV["PASSWORD"])
 sleep(rand())
 click!(login_button)
 # -
-
+sleep(rand())
 navigate!(session, "https://www.linkedin.com/company/the-julia-language/posts/")
 
 SCROLL_PAUSE_TIME = 1.5
