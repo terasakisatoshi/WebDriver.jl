@@ -32,15 +32,23 @@ struct Element
         value::AbstractString,
     )::Element
         location_strategy ∈
-        ["css selector", "link text", "partial link text", "tag name", "xpath"] ||
+        ["css selector", "class name", "link text", "partial link text", "tag name", "xpath"] ||
         throw(ArgumentError("""location_strategy must be "css selector", "link text", "partial link text", "tag name" or "xpath"."""))
         @unpack addr, id = session
+        if location_strategy == "css selector"
+            value = "[id=\"$(value)\"]"
+        end
+
+        if location_strategy == "class name"
+            value = ".$(value)"
+        end
+        @show value
         # location_strategy = "xpath"
         # value = "//select[@id='selecttype']"
         response = HTTP.post(
             "$addr/session/$id/element",
             [("Content-Type" => "application/json; charset=utf-8")],
-            JSON3.write(Dict("using" => location_strategy, "value" => value)),
+            JSON3.write(Dict("using" => "css selector", "value" => value)),
         )
         @assert response.status == 200
         new(session, first(values(JSON3.read(response.body).value)))
@@ -51,15 +59,19 @@ struct Element
         location_strategy::AbstractString,
         value::AbstractString,
     )::Element
+        @show value
         location_strategy ∈
-        ["css selector", "link text", "partial link text", "tag name", "xpath"] ||
+        ["css selector", "class name", "link text", "partial link text", "tag name", "xpath"] ||
         throw(ArgumentError("""location_strategy must be "css selector", "link text", "partial link text", "tag name" or "xpath"."""))
         @unpack addr, id = element.session
         element_id = element.id
+        if location_strategy == "css selector"
+            value = "[id=\"$(value)\"]"
+        end
         response = HTTP.post(
             "$addr/session/$id/element/$element_id/element",
             [("Content-Type" => "application/json; charset=utf-8")],
-            JSON3.write(Dict("using" => location_strategy, "value" => value)),
+            JSON3.write(Dict("using" => "css selector", "value" => value)),
         )
         @assert response.status == 200
         new(element.session, first(values(JSON3.read(response.body).value)))

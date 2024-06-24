@@ -1,2 +1,4 @@
 .CondaPkg
 default.profraw
+.dotenv
+.envrc

@@ -11,6 +11,7 @@ function click!(element::Element)::Nothing
     response = HTTP.post(
         "$addr/session/$id/element/$element_id/click",
         [("Content-Type" => "application/json; charset=utf-8")],
+        JSON3.write(Dict()),
     )
     @assert response.status == 200
 end
