@@ -19,7 +19,7 @@ begin
 	using Pkg
 	Pkg.activate(temp=true)
 	Pkg.add(
-		url="https://github.com/terasakisatoshi/WebDriver.jl", rev="terasaki/debug"
+		url="https://github.com/terasakisatoshi/WebDriver.jl", rev="terasaki/glass-notebook-patch"
 	)
 	Pkg.add(["AbstractTrees", "CondaPkg", "DotEnv","Gumbo", "PythonCall"])
 	Pkg.add("PlutoUI")
@@ -186,9 +186,6 @@ begin
 	extractpost(s)
 end
 
-# ╔═╡ b5e6f3ae-0cba-4eb1-8ce9-059d07043c7f
-
-
 # ╔═╡ Cell order:
 # ╠═ea8534d0-3217-11ef-16ee-ed791b315d4e
 # ╠═e182b627-a743-43c8-b3b5-e17bcfb8270b
@@ -200,4 +197,3 @@ end
 # ╠═5c77104f-8a49-45b9-bef5-616d4bd10afc
 # ╠═91e12d5c-e3f6-4aee-95fa-9ae8c34d9192
 # ╠═44005657-9cfb-41af-b78a-3dcc5f1b5906
-# ╠═b5e6f3ae-0cba-4eb1-8ce9-059d07043c7f
