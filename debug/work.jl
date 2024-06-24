@@ -48,6 +48,9 @@ wd = RemoteWebDriver(
     host, port
 )
 
+# close the default session binded by Python process
+driver.close()
+
 # New Session
 session = Session(wd)
 # -
@@ -96,5 +99,7 @@ company_page = source(session)
 open("soup.html", "w") do io
     println(io, company_page)
 end
+
+window_close!(session)
 
 
