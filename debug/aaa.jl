@@ -36,16 +36,6 @@ divs = filter(collect(PostOrderDFS(root))) do e
 	end
 end
 
-# ╔═╡ 4ba1f716-b0cc-47cf-a191-f9cef9076e8a
-filter((divs[1].children |> only).children) do c
-	if c isa Gumbo.HTMLElement{:div}
-		@show get(c.attributes, "class", nothing)
-		true
-	else
-		false
-	end
-end
-
 # ╔═╡ 3470fe80-315c-4df8-89a7-f7f758dd0508
 begin
 	d = divs[1]
@@ -270,7 +260,6 @@ version = "17.4.0+2"
 # ╠═10e155c0-31f3-11ef-2752-518ab1e06de9
 # ╠═d37a9ced-a74a-404e-b04b-47a59c44e9b2
 # ╠═ca66f94f-d1a5-459a-bec2-6fa37408925c
-# ╠═4ba1f716-b0cc-47cf-a191-f9cef9076e8a
 # ╠═3470fe80-315c-4df8-89a7-f7f758dd0508
 # ╠═4842203f-4460-451a-b3c8-11e07bc19229
 # ╠═985c23fc-f9b2-4855-9571-6ce617968f9f

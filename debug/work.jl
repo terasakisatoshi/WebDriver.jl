@@ -59,9 +59,11 @@ navigate!(session, "https://www.linkedin.com/login")
 username = Element(session, "css selector", "username")
 password = Element(session, "css selector", "password")
 login_button = Element(session, "class name", "btn__primary--large")
-
+sleep(rand())
 element_keys!(username, ENV["USERNAME"])
+sleep(rand())
 element_keys!(password, ENV["PASSWORD"])
+sleep(rand())
 click!(login_button)
 # -
 
@@ -74,7 +76,8 @@ GET_SCROLL_HEIGHT_COMMAND = "return document.body.scrollHeight"
 last_height = script!(session, GET_SCROLL_HEIGHT_COMMAND)
 scrolls = 0
 no_change_count = 0
-for _ in 1:3
+for _ in 1:5
+    global no_change_count, last_height, scrolls
     script!(session, SCROLL_COMMAND)
     sleep(SCROLL_PAUSE_TIME)
     new_height = script!(session, GET_SCROLL_HEIGHT_COMMAND)
