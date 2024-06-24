@@ -12,8 +12,9 @@
 #     name: julia-1.10
 # ---
 
-# +
 using Revise
+
+# +
 using Test
 
 using DotEnv
@@ -23,13 +24,15 @@ using CondaPkg
 using WebDriver
 
 webdriver = pyimport("selenium.webdriver")
+By = pyimport("selenium.webdriver.common.by").By
 # -
 
+# Prepare `.env` file and store `USERNAME` and `PASSWORD`
 DotEnv.load!()
 
 # +
-driver = webdriver.Chrome()
-command_executor_url = pyconvert(String, driver.command_executor._url)
+driver = webdriver.Chrome() # Python object
+command_executor_url = pyconvert(String, driver.command_executor._url)::String
 
 m = match(r"http://[^:]+:(?P<port>\d+)", command_executor_url)
 _port = m.captures |> only
@@ -50,12 +53,45 @@ session = Session(wd)
 # -
 
 #Open login page
-navigate!(session, "https://www.linkedin.com/login?fromSignIn=true&trk=guest_homepage-basic_nav-header-signin")
+navigate!(session, "https://www.linkedin.com/login")
 
-username = Element(session, "username")
-password = Element(session, "password")
+# +
+username = Element(session, "css selector", "username")
+password = Element(session, "css selector", "password")
+login_button = Element(session, "class name", "btn__primary--large")
 
-element_key!(username, ENV["USERNAME"])
-element_key!(password, ENV["PASSWORD"])
+element_keys!(username, ENV["USERNAME"])
+element_keys!(password, ENV["PASSWORD"])
+click!(login_button)
+# -
+
+navigate!(session, "https://www.linkedin.com/company/the-julia-language/posts/")
+
+SCROLL_PAUSE_TIME = 1.5
+MAX_SCROLLS = false
+SCROLL_COMMAND = "window.scrollTo(0, document.body.scrollHeight);"
+GET_SCROLL_HEIGHT_COMMAND = "return document.body.scrollHeight"
+last_height = script!(session, GET_SCROLL_HEIGHT_COMMAND)
+scrolls = 0
+no_change_count = 0
+for _ in 1:3
+    script!(session, SCROLL_COMMAND)
+    sleep(SCROLL_PAUSE_TIME)
+    new_height = script!(session, GET_SCROLL_HEIGHT_COMMAND)
+    # Increment no change count or reset it
+    no_change_count = new_height == last_height ?  no_change_count + 1 : 0
+    # Break loop if the scroll height has not changed for 3 cycles or reached the maximum scrolls
+    if no_change_count >= 3 || (MAX_SCROLLS && scrolls >= MAX_SCROLLS)
+        break
+    end
+    last_height = new_height
+    scrolls += 1
+end
+
+company_page = source(session)
+
+open("soup.html", "w") do io
+    println(io, company_page)
+end
 
 

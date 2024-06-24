@@ -11,7 +11,7 @@ Executes JavaScript (sync / async)
 function script!(session::Session, _script::AbstractString, args...; async::Bool = false)
     @unpack addr, id = session
     response = HTTP.post(
-        "$addr/session/$id/execute$(async ? "_async" : "")",
+        "$addr/session/$id/execute/$(async ? "async" : "sync")",
         [("Content-Type" => "application/json; charset=utf-8")],
         JSON3.write(Dict(
             "script" => _script,
